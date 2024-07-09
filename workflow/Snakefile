@@ -1,4 +1,21 @@
-# Main entrypoint of the workflow. 
-# Please follow the best practices: 
-# https://snakemake.readthedocs.io/en/stable/snakefiles/best_practices.html,
-# in particular regarding the standardized folder structure mentioned there. 
+include: "rules/common.smk"
+
+
+##### Target rules #####
+
+
+rule all:
+    input:
+        "results/amplicons",
+        "results/amplicons/all_amplicons.fasta",
+        "results/amplicons/all_amplicons_filtered.fasta",
+        "results/reads/reads_1.fastq",
+        "results/reads/reads_1.fastq"
+
+##### Modules #####
+
+
+include: "rules/create_amplicons.smk"
+include: "rules/combine_amplicons.smk"
+include: "rules/filter_amplicons.smk"
+include: "rules/simulate_reads.smk"
