@@ -1,9 +1,9 @@
 rule create_amplicon:
     input:
-        genome="resources/genomes/sample1.fasta",
-        primer=config["primers"]["primer_bed"],
+        genome="data/genomes/{isolate}.fasta",
+        primer="data/primers/primer.bed",
     output:
-        directory("results/amplicons")
+        directory("results/{isolate}/amplicons")
 
     conda:
         "../envs/freyja.yaml"

@@ -1,21 +1,11 @@
+configfile: "config/config.yaml"
+
 include: "rules/common.smk"
-
-
-##### Target rules #####
-
-
-rule all:
-    input:
-        "results/amplicons",
-        "results/amplicons/all_amplicons.fasta",
-        "results/amplicons/all_amplicons_filtered.fasta",
-        "results/reads/reads_1.fastq",
-        "results/reads/reads_1.fastq"
-
-##### Modules #####
-
-
 include: "rules/create_amplicons.smk"
 include: "rules/combine_amplicons.smk"
 include: "rules/filter_amplicons.smk"
 include: "rules/simulate_reads.smk"
+
+rule all:
+    input:
+    get_final_output(),
