@@ -8,4 +8,4 @@ include: "rules/simulate_reads.smk"
 
 rule all:
     input:
-    get_final_output(),
+        get_final_output(),
