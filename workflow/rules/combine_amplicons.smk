@@ -1,6 +1,6 @@
 rule combine_amplicons:
     input:
-        directory("results/{isolate}/amplicons")
+        "results/{isolate}/amplicons"
     output:
         "results/{isolate}/amplicons/all_amplicons.fasta"
     shell:
