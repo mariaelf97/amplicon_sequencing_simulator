@@ -6,6 +6,6 @@ rule filter_amplicons:
     log:
         "logs/{isolate}/{isolate}_filter_amplicon.log"
     conda:
-        "../envs/freyja.yaml"
+        "envs/freyja.yaml"
     shell:
-        """python ../scripts/filter_amplicons.py -i {input} -o {output}"""
+        """python workflow/scripts/filter_amplicons.py -i {input} -o {output}"""

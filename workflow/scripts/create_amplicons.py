@@ -2,7 +2,6 @@ import itertools
 from itertools import permutations
 import math
 import os
-from os.path import basename
 from Bio import SeqIO
 import pandas as pd
 from Bio.Seq import Seq
@@ -27,14 +26,18 @@ def make_amplicon(left_primer_loc,right_primer_loc,
                   primer_seq_y, reference):
     """function to create amplicons based on the string match location"""
     if math.isnan(left_primer_loc) or math.isnan(right_primer_loc):
+        # if there is either no left and right primer match
         amplicon = ""
-        return amplicon
+        # length of the right primer is added to include the 
+        # right primer in the amplicon
     else:
         amplicon = reference[int(left_primer_loc - 1): int(right_primer_loc + len(primer_seq_y))]
-        return amplicon
+    return amplicon
 
 def evaluate_matches(left_primer_coordinates, right_primer_coordinates):
     """function to evaluate which coordinates found for each primer makes a valid amplicon"""
+    # if both left and right primer string matches exist,
+    # find left and right primer pairs that can create an amplicon
     if len(left_primer_coordinates) !=0 and len(right_primer_coordinates)!=0:
         valid_combinations = []
         combinations = list(itertools.product(left_primer_coordinates, right_primer_coordinates))
@@ -102,7 +105,6 @@ def main():
     all_amplicons = pd.merge(d, merged_df[["amplicon_number","primer_seq_x","primer_seq_y"]], how='outer', sort=False, on='amplicon_number')
     all_amplicons = all_amplicons.fillna(0)
 
-    #all_amplicons.to_csv(args.output, index=False)
     all_amplicons["amplicon_sequence"] = all_amplicons.apply(lambda row: make_amplicon(row["primer_start"],
                                                                           row["primer_end"],
                                                                           row["primer_seq_y"],reference_seq), axis=1)
@@ -110,6 +112,7 @@ def main():
     for row in all_amplicons.itertuples():
         if not os.path.exists(args.output):
             os.makedirs(args.output)
+            # include row index in case primer pair creates more than one valid amplicon
         with open(f"{args.output}/amplicon_{row.amplicon_number}_" + str(row.Index) + ".fasta", "w") as f:
             f.write(f">{reference.id}_amplicon_{row.amplicon_number}" + "_" + str(row.Index) + "\n")
             f.write(row.amplicon_sequence + "\n\n")

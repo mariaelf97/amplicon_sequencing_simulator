@@ -2,7 +2,6 @@ configfile: "config/config.yaml"
 
 include: "rules/common.smk"
 include: "rules/create_amplicons.smk"
-include: "rules/combine_amplicons.smk"
 include: "rules/filter_amplicons.smk"
 include: "rules/simulate_reads.smk"
 
