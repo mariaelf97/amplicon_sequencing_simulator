@@ -1,5 +1,5 @@
 configfile: "config/config.yaml"
-ISOLATES = [i for i in open("data/isolates.txt").read().split('\n') if len(i) >0]
+ISOLATES = [i for i in open(config["samples"]).read().split('\n') if len(i) >0]
 
 
 def get_final_output():

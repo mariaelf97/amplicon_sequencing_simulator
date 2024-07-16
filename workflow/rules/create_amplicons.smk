@@ -4,7 +4,8 @@ rule create_amplicon:
         primer="data/primers/primer.bed",
     output:
         directory("results/{isolate}/amplicons")
-
+    log:
+        "logs/{isolate}_amplicon.log",
     conda:
         "../envs/freyja.yaml"
     shell:

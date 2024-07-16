@@ -3,6 +3,8 @@ rule filter_amplicons:
         "results/{isolate}/amplicons/all_amplicons.fasta",
     output:
         "results/{isolate}/amplicons/all_amplicons_filtered.fasta"
+    log:
+        "logs/{isolate}/{isolate}_filter_amplicon.log"
     conda:
         "../envs/freyja.yaml"
     shell:
