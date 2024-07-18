@@ -7,6 +7,17 @@ rule wgsim:
     log:
         "logs/{isolate}/{isolate}_read_simulation.log"
     params:
-        "-1 400 -2 400 -r 0.00001 -d 100 -R 0.00001 -X 0 -e 0.00001 -N 50000"
-    wrapper:
-        "v3.13.6/bio/wgsim"
+        read_length_1 = config["simulation"]["read_length_1"],
+        read_length_2 = config["simulation"]["read_length_2"],
+        r = config["simulation"]["r"],
+        d = config["simulation"]["d"],
+        R = config["simulation"]["R"],
+        X = config["simulation"]["X"],
+        e = config["simulation"]["e"],
+        N = config["simulation"]["read_cnt"]
+    conda:
+        "envs/wgsim.yaml"
+    shell:
+        """wgsim -1 {params.read_length_1} -2 {params.read_length_2} -r {params.r}\
+         -d {params.d} -R {params.R} -X {params.X} -e {params.e} -N {params.N}\
+          {input} {output.read1} {output.read2}"""

@@ -1,1 +1,18 @@
 samples: data/isolates.txt
+
+simulation:
+  # number of reads
+  read_cnt: 50000
+  # read length
+  read_length_1: 150
+  read_length_2: 150
+  # Rate of mutation
+  r: 0.00001 
+  # outer distance between reads
+  d: 100
+  # fraction of indels
+  R: 0.00001
+  # probability an indel is extended
+  X: 0
+  # base error rate
+  e: 0
