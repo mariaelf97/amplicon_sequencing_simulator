@@ -1,12 +1,17 @@
+import os
+
 rule create_amplicon:
     input:
-        genome="data/genomes/{isolate}.fasta",
-        primer="data/primers/primer.bed",
+        genome=config["samples"]["sample_path"],
+        primer=config["primers"]["primer_file"],
     output:
-        output1=directory("results/{isolate}/amplicons"),
-        output2="results/{isolate}/amplicons/all_amplicons.fasta"
+        output1=directory(os.path.join(config["output"]["output_path"],"results",
+        config["samples"]["sample_name"],"amplicons")),
+        output2=os.path.join(config["output"]["output_path"],"results",
+        config["samples"]["sample_name"],"amplicons/all_amplicons.fasta")
     log:
-        "logs/{isolate}_amplicon.log",
+        os.path.join(config["output"]["output_path"],"results",
+        config["samples"]["sample_name"],"create_amplicon.log")
     conda:
         "envs/freyja.yaml"
     shell:

@@ -1,18 +1,16 @@
-samples: data/isolates.txt
-
+output:
+  output_path: trial
+primers:
+  primer_file: /home/mahmadi/tb_seqs/primers/primer.bed
+samples:
+  sample_name: GCA_014884645.1
+  sample_path: /home/mahmadi/tb_seqs/genomes/long_read_assemblies/pacbio-RSII/GCA_014884645.1/GCA_014884645.1.fna
 simulation:
-  # number of reads
-  read_cnt: 50000
-  # read length
+  R: 1.0e-05
+  X: 0
+  d: 100
+  e: 0
+  r: 1.0e-05
+  read_cnt: 10000.0
   read_length_1: 150
   read_length_2: 150
-  # Rate of mutation
-  r: 0.00001 
-  # outer distance between reads
-  d: 100
-  # fraction of indels
-  R: 0.00001
-  # probability an indel is extended
-  X: 0
-  # base error rate
-  e: 0

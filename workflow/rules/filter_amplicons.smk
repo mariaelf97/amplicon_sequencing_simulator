@@ -1,10 +1,14 @@
+import os
 rule filter_amplicons:
     input:
-        "results/{isolate}/amplicons/all_amplicons.fasta",
+        os.path.join(config["output"]["output_path"],"results",
+        config["samples"]["sample_name"],"amplicons/all_amplicons.fasta"),
     output:
-        "results/{isolate}/amplicons/all_amplicons_filtered.fasta"
+        os.path.join(config["output"]["output_path"],"results",
+        config["samples"]["sample_name"],"amplicons/all_amplicons_filtered.fasta"),
     log:
-        "logs/{isolate}/{isolate}_filter_amplicon.log"
+        os.path.join(config["output"]["output_path"],"results",
+        config["samples"]["sample_name"],"amplicon_filter.logs")
     conda:
         "envs/freyja.yaml"
     shell:

@@ -1,11 +1,15 @@
 rule wgsim:
     input:
-        ref="results/{isolate}/amplicons/all_amplicons_filtered.fasta"
+        os.path.join(config["output"]["output_path"],"results",
+        config["samples"]["sample_name"],"amplicons/all_amplicons_filtered.fasta")
     output:
-        read1="results/{isolate}/reads/reads_1.fastq",
-        read2="results/{isolate}/reads/reads_2.fastq"
+        read1=os.path.join(config["output"]["output_path"],"results",
+        config["samples"]["sample_name"],"reads/reads_1.fastq"),
+        read2=os.path.join(config["output"]["output_path"],"results",
+        config["samples"]["sample_name"],"reads/reads_2.fastq")
     log:
-        "logs/{isolate}/{isolate}_read_simulation.log"
+        os.path.join(config["output"]["output_path"],"results",
+        config["samples"]["sample_name"],"read_simulation.log")
     params:
         read_length_1 = config["simulation"]["read_length_1"],
         read_length_2 = config["simulation"]["read_length_2"],
