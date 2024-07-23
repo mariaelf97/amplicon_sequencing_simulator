@@ -40,6 +40,18 @@ def write_yaml(config):
     with open("config.yaml", 'w') as file:
         yaml.dump(config, file, default_flow_style=False)
 
+ 
+def merge_fastq_files(fastq_file, output_file):
+    """
+    Merges a FASTQ file into an output FASTQ file using subprocess.call.
+
+    Parameters:
+    fastq_file (str): Path to the input FASTQ file.
+    output_file (str): Path to the output FASTQ file.
+    """
+    command = f'cat "{fastq_file}" >> "{output_file}"'
+    subprocess.call(command, shell=True)
+
 def main():
     parser = argparse.ArgumentParser(description="Amplicon sequencing simulator with user-defined proportions")
     parser.add_argument("--samplenames", "-s", help="name of samples in order, separated by a comma")
@@ -71,8 +83,13 @@ def main():
                                      args.mutationrate,args.outerdistance,
                                      args.indelfraction,args.indelextended,
                                      args.baseerrorrate)
+        
         write_yaml(config=config_file)
         run_amplicon_simulator()
+        read_path = os.path.join(os.path.abspath(args.output),"results",name,"reads/reads_1.fastq")
+        output_path = os.path.join(os.path.abspath(args.output),"results/merged_reads.fastq")
+        print(read_path,output_path)
+        merge_fastq_files(read_path,output_path)
     
     
 if __name__ == "__main__":
