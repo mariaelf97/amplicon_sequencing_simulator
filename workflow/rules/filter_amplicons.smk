@@ -1,4 +1,3 @@
-import os
 rule filter_amplicons:
     input:
         os.path.join(config["output"]["output_path"],"results",

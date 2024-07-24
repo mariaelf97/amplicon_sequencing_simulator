@@ -1,1 +1,1 @@
-configfile: "config.yaml"
+configfile: "config/config.yaml"

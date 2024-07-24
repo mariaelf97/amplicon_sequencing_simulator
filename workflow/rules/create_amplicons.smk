@@ -1,5 +1,3 @@
-import os
-
 rule create_amplicon:
     input:
         genome=config["samples"]["sample_path"],
