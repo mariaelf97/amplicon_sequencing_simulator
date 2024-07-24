@@ -11,4 +11,4 @@ rule filter_amplicons:
     conda:
         "envs/freyja.yaml"
     shell:
-        """python workflow/scripts/filter_amplicons.py -i {input} -o {output}"""
+        """python ../workflow/scripts/filter_amplicons.py -i {input} -o {output}"""

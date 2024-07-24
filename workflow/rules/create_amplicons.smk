@@ -13,7 +13,7 @@ rule create_amplicon:
     conda:
         "envs/freyja.yaml"
     shell:
-        """python workflow/scripts/create_amplicons.py\
+        """python ../workflow/scripts/create_amplicons.py\
          -g {input.genome} -o {output.output1} -p {input.primer}\
           && python workflow/scripts/combine_amplicons.py\
          -i {output.output1} -o {output.output2} """
