@@ -1,0 +1,16 @@
+output:
+  output_path: measles-test
+primers:
+  primer_file: .test/artic-measles-v10.0.0.bed
+samples:
+  sample_name: GCA_031113335.1
+  sample_path: .test/GCA_031113335.1.fna
+simulation:
+  R: 1.0e-05
+  X: 0
+  d: 100
+  e: 0
+  r: 1.0e-05
+  read_cnt: 10000.0
+  read_length_1: 150
+  read_length_2: 150
