@@ -7,7 +7,7 @@ rule filter_amplicons:
         config["samples"]["sample_name"],"amplicons/all_amplicons_filtered.fasta"),
     log:
         os.path.join(config["output"]["output_path"],"results",
-        config["samples"]["sample_name"],"amplicon_filter.logs")
+        config["samples"]["sample_name"],"amplicons/filter_amplicon.log")
     conda:
         "envs/freyja.yaml"
     shell:

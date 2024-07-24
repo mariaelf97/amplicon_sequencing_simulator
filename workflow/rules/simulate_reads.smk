@@ -9,7 +9,7 @@ rule wgsim:
         config["samples"]["sample_name"],"reads/reads_2.fastq")
     log:
         os.path.join(config["output"]["output_path"],"results",
-        config["samples"]["sample_name"],"read_simulation.log")
+        config["samples"]["sample_name"],"simulation.log")
     params:
         read_length_1 = config["simulation"]["read_length_1"],
         read_length_2 = config["simulation"]["read_length_2"],

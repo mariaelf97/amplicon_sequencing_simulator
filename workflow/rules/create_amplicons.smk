@@ -9,7 +9,7 @@ rule create_amplicon:
         config["samples"]["sample_name"],"amplicons/all_amplicons.fasta")
     log:
         os.path.join(config["output"]["output_path"],"results",
-        config["samples"]["sample_name"],"create_amplicon.log")
+        config["samples"]["sample_name"],"amplicons/create_amplicon.log")
     conda:
         "envs/freyja.yaml"
     shell:
