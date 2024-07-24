@@ -14,7 +14,7 @@ The usage of this workflow is described in the [Snakemake Workflow Catalog](http
 If you use this workflow in a paper, don't forget to give credits to the authors by citing the URL of this (original) <https://github.com/mariaelf97/amplicon_sequencing_simulator> repository and its DOI (see above).
 
 # Steps
-* Clone the git repository and change the working directory `cd amplicon_sequencing_simulator`
+* Clone the git repository and change the working directory `cd amplicon_sequencing_simulator/`
 * Install snakemake `conda create -n snakemake bioconda::snakemake`
 * Run the wrapper using
  ```
