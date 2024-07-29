@@ -22,5 +22,5 @@ If you use this workflow in a paper, don't forget to give credits to the authors
  ```
 * Please remember that the primer file must contain a column containing primer sequence. The maximum mismatches allowed for each primer sequence is 1 SNP.
 * To learn more about how to adjust other parameters use `python workflow/scripts/amplicon_simulator_wrapper.py --help`
-* The final outputs will be located at `provided_output_path/results`. Simulated reads from all samples are located in `provided_output_path/results/merged_reads.fastq`
+* The final outputs will be located at `provided_output_path/results`. Simulated reads from all samples are located in `provided_output_path/results/merged_reads.fq`
 * Once you run the pipeline, it will create a config.yaml file in your current working directory that contains information about all the parameters used in the simulation.
