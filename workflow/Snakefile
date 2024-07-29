@@ -2,7 +2,17 @@ include: "rules/common.smk"
 include: "rules/create_amplicons.smk"
 include: "rules/simulate_reads.smk"
 
-rule all:
+ rule all:
     input:
-        os.path.join(config["output"]["output_path"], "results",config["samples"]["sample_name"], "amplicons"),
-        os.path.join(config["output"]["output_path"],"results",config["samples"]["sample_name"],"reads")
+        os.path.join(
+            config["output"]["output_path"],
+            "results",
+            config["samples"]["sample_name"],
+            "amplicons",
+        ),
+        os.path.join(
+            config["output"]["output_path"],
+            "results",
+            config["samples"]["sample_name"],
+            "reads",
+       ),
