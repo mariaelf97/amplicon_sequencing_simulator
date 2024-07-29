@@ -7,7 +7,7 @@ import pandas as pd
 from Bio.Seq import Seq
 from regex import regex
 import argparse
-
+from Bio.SeqRecord import SeqRecord
 
 def find_closest_match(pattern,reference_seq):
     """function to find a string allowing up to 1 mismatches"""
@@ -50,13 +50,32 @@ def evaluate_matches(left_primer_coordinates, right_primer_coordinates):
         return valid_combinations
     else:
         return []
+def write_fasta_group(group, amplicon_number, output_dir):
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
 
+    fasta_filename = os.path.join(output_dir, f'amplicon_{amplicon_number}.fasta')
+
+    # Filter sequences based on length criteria
+    filtered_records = [
+        SeqRecord(Seq(seq), id=f"{amplicon_number}_{i}", description="")
+        for i, seq in enumerate(group['amplicon_sequence'])
+        if 1 < len(seq) < 10000
+    ]
+    
+    if filtered_records:
+        SeqIO.write(filtered_records, fasta_filename, 'fasta')
+        print(f"Written {fasta_filename}")
+    else:
+        print(f"No valid sequences for amplicon {amplicon_number}, no file written.\
+            please checkout the amplicon_stats.csv file for more information.")
+        
 
 def main():
     parser = argparse.ArgumentParser(description="Create amplicons for a genome using a primer set.")
-    parser.add_argument("--genome_path", "-g", help="Path to the genome of interest.")
-    parser.add_argument("--output", "-o", help="Folder where the output will go")
-    parser.add_argument("--primers_file", "-p", help="Path to primer bed file")
+    parser.add_argument("--genome_path", "-g", help="Path to the genome of interest.", required=True)
+    parser.add_argument("--output", "-o", help="Folder where the output will go", required=True)
+    parser.add_argument("--primers_file", "-p", help="Path to primer bed file", required=True)
 
     args = parser.parse_args()
     # the sequence used to create amplicons
@@ -104,20 +123,14 @@ def main():
             d = pd.concat([d, temp])
     all_amplicons = pd.merge(d, merged_df[["amplicon_number","primer_seq_x","primer_seq_y"]], how='outer', sort=False, on='amplicon_number')
     all_amplicons = all_amplicons.fillna(0)
-    all_amplicons.to_csv(os.path.join(args.output),"amplicon_stats.csv")
+    all_amplicons.to_csv(os.path.join(args.output,"amplicon_stats.csv"))
 
     all_amplicons["amplicon_sequence"] = all_amplicons.apply(lambda row: make_amplicon(row["primer_start"],
                                                                           row["primer_end"],
                                                                           row["primer_seq_y"],reference_seq), axis=1)
     # write amplicons
-    for row in all_amplicons.itertuples():
-        if not os.path.exists(args.output):
-            os.makedirs(args.output)
-            # include row index in case primer pair creates more than one valid amplicon
-        with open(f"{args.output}/amplicon_{row.amplicon_number}_" + str(row.Index) + ".fasta", "w") as f:
-            f.write(f">{reference.id}_amplicon_{row.amplicon_number}" + "_" + str(row.Index) + "\n")
-            f.write(row.amplicon_sequence + "\n\n")
-
+    for amplicon_number, group in all_amplicons.groupby('amplicon_number'):
+        fasta_file = write_fasta_group(group, amplicon_number, args.output)
 
 if __name__ == "__main__":
     main()
