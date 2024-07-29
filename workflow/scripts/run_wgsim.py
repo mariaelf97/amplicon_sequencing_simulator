@@ -21,6 +21,7 @@ def run_wgsim_on_fasta(fasta_file, output_dir, read_length, error_rate, mutation
     output_prefix = os.path.splitext(os.path.basename(fasta_file))[0]
     output1 = os.path.join(output_dir, f"{output_prefix}_1.fq")
     output2 = os.path.join(output_dir, f"{output_prefix}_2.fq")
+    merged_output = os.path.join(output_dir, "merged_reads.fq")
 
     command = [
         "wgsim",
@@ -39,7 +40,9 @@ def run_wgsim_on_fasta(fasta_file, output_dir, read_length, error_rate, mutation
 
     subprocess.run(command, check=True)
     print(f"wgsim completed for {fasta_file}")
-
+    command = f'cat "{output1}" >> "{merged_output}"'
+    subprocess.call(command, shell=True)
+    
 def main():
     args = get_arguments()
 
@@ -57,6 +60,5 @@ def main():
         if filename.endswith(".fasta") or filename.endswith(".fa"):
             fasta_file = os.path.join(args.directory, filename)
             run_wgsim_on_fasta(fasta_file, args.output, args.read_length, args.error_rate, args.mutation_rate, args.outerdistance, args.readcnt, args.indel_fraction, args.indel_extend_probability)
-
 if __name__ == "__main__":
     main()
