@@ -106,8 +106,8 @@ def main():
         # simulate reads based on config file
         run_amplicon_simulator()
         # create paths to merge all reads after simualtion
-        read_path = os.path.join(os.path.abspath(args.output),"results",name,"reads/reads_1.fastq")
-        output_path = os.path.join(os.path.abspath(args.output),"results/merged_reads.fastq")
+        read_path = os.path.join(os.path.abspath(args.output),"results",name,"reads/merged_reads.fq")
+        output_path = os.path.join(os.path.abspath(args.output),"results/merged_reads.fq")
         # merge fastq files 
         merge_fastq_files(read_path,output_path)
     
