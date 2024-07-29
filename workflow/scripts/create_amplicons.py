@@ -123,6 +123,8 @@ def main():
             d = pd.concat([d, temp])
     all_amplicons = pd.merge(d, merged_df[["amplicon_number","primer_seq_x","primer_seq_y"]], how='outer', sort=False, on='amplicon_number')
     all_amplicons = all_amplicons.fillna(0)
+    if not os.path.exists(args.output):
+        os.makedirs(args.output)
     all_amplicons.to_csv(os.path.join(args.output,"amplicon_stats.csv"))
 
     all_amplicons["amplicon_sequence"] = all_amplicons.apply(lambda row: make_amplicon(row["primer_start"],
