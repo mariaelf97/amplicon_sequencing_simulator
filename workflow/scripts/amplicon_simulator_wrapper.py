@@ -31,9 +31,9 @@ def create_config_dict(sample_name,sample_path,primer_file,output_file,read_cnt,
             'output_path': str(output_file)
         },
         'simulation': {
-            'read_cnt': read_cnt,
-            'read_length_1': read_length,
-            'read_length_2': read_length,
+            'read_cnt': int(read_cnt),
+            'read_length_1': int(read_length),
+            'read_length_2': int(read_length),
             'r': r,
             'd': d,
             'R': R,
