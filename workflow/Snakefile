@@ -1,15 +1,19 @@
 include: "rules/common.smk"
 include: "rules/create_amplicons.smk"
-include: "rules/filter_amplicons.smk"
 include: "rules/simulate_reads.smk"
+
 
 rule all:
     input:
-        os.path.join(config["output"]["output_path"], "results",
-                     config["samples"]["sample_name"], "amplicons/all_amplicons.fasta"),
-        os.path.join(config["output"]["output_path"], "results",
-                     config["samples"]["sample_name"], "amplicons/all_amplicons_filtered.fasta"),
-        os.path.join(config["output"]["output_path"], "results",
-                     config["samples"]["sample_name"], "reads/reads_1.fastq"),
-        os.path.join(config["output"]["output_path"], "results",
-                     config["samples"]["sample_name"], "reads/reads_2.fastq")
+        os.path.join(
+            config["output"]["output_path"],
+            "results",
+            config["samples"]["sample_name"],
+            "amplicons",
+        ),
+        os.path.join(
+            config["output"]["output_path"],
+            "results",
+            config["samples"]["sample_name"],
+            "reads",
+        ),
