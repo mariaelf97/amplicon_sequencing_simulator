@@ -72,9 +72,6 @@ def write_fasta_group(group, amplicon_number, output_dir):
 
 def main():
     parser = argparse.ArgumentParser(description="Create amplicons for a genome using a primer set.")
-    parser.add_argument("--genome_path", "-g", help="Path to the genome of interest.")
-    parser.add_argument("--output", "-o", help="Folder where the output will go")
-    parser.add_argument("--primers_file", "-p", help="Path to primer bed file")
     parser.add_argument("--genome_path", "-g", help="Path to the genome of interest.", required=True)
     parser.add_argument("--output", "-o", help="Folder where the output will go", required=True)
     parser.add_argument("--primers_file", "-p", help="Path to primer bed file", required=True)
