@@ -1,12 +1,10 @@
 rule wgsim:
     input:
         os.path.join(config["output"]["output_path"],"results",
-        config["samples"]["sample_name"],"amplicons/all_amplicons_filtered.fasta")
+        config["samples"]["sample_name"],"amplicons")
     output:
-        read1=os.path.join(config["output"]["output_path"],"results",
-        config["samples"]["sample_name"],"reads/reads_1.fastq"),
-        read2=os.path.join(config["output"]["output_path"],"results",
-        config["samples"]["sample_name"],"reads/reads_2.fastq")
+        os.path.join(config["output"]["output_path"],"results",
+        config["samples"]["sample_name"],"reads")
     log:
         os.path.join(config["output"]["output_path"],"results",
         config["samples"]["sample_name"],"simulation.log")
@@ -22,6 +20,6 @@ rule wgsim:
     conda:
         "envs/wgsim.yaml"
     shell:
-        """wgsim -1 {params.read_length_1} -2 {params.read_length_2} -r {params.r}\
-         -d {params.d} -R {params.R} -X {params.X} -e {params.e} -N {params.N}\
-          {input} {output.read1} {output.read2}"""
+        """python workflow/scripts/run_wgsim.py -in {input} -d {params.d}\
+         -N {params.N} -o {output} -1 {params.read_length_1} -e {params.e}\
+          -r {params.r} -R {params.R} -X {params.X}"""
