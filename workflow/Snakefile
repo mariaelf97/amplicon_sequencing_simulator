@@ -5,6 +5,6 @@ include: "rules/simulate_reads.smk"
 rule all:
     input:
         os.path.join(config["output"]["output_path"], "results",
-                     config["samples"]["sample_name"], "amplicons.fasta"),
+                     config["samples"]["sample_name"], "amplicons"),
         os.path.join(config["output"]["output_path"], "results",
                      config["samples"]["sample_name"], "reads")
