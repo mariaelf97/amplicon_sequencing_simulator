@@ -9,11 +9,11 @@ def get_arguments():
     parser.add_argument("-d", "--outerdistance", required=True, type=int, help="outer distance")
     parser.add_argument("-N", "--readcnt", required=True, type=int, help="number of reads per amplicon")
     parser.add_argument("-o", "--output", required=True, help="Directory to store output files.")
-    parser.add_argument("-r", "--read_length", required=True, type=int, help="Read length (e.g., 100).")
+    parser.add_argument("-1", "--read_length", required=True, type=int, help="Read length (e.g., 100).")
     parser.add_argument("-e", "--error_rate", required=True, type=float, help="Base error rate (e.g., 0.02).")
-    parser.add_argument("-m", "--mutation_rate", required=True, type=float, help="Mutation rate (e.g., 0.001).")
-    parser.add_argument("-i", "--indel_fraction", required=True, type=float, help="Fraction of indels (e.g., 0.15).")
-    parser.add_argument("-p", "--indel_extend_probability", required=True, type=float, help="Probability an indel is extended (e.g., 0.3).")
+    parser.add_argument("-r", "--mutation_rate", required=True, type=float, help="Mutation rate (e.g., 0.001).")
+    parser.add_argument("-R", "--indel_fraction", required=True, type=float, help="Fraction of indels (e.g., 0.15).")
+    parser.add_argument("-X", "--indel_extend_probability", required=True, type=float, help="Probability an indel is extended (e.g., 0.3).")
     return parser.parse_args()
 
 def run_wgsim_on_fasta(fasta_file, output_dir, read_length, error_rate, mutation_rate, outer_distance, read_cnt, indel_fraction, indel_extend_probability):
