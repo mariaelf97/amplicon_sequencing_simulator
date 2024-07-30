@@ -11,6 +11,6 @@ simulation:
   d: 100
   e: 0
   r: 1.0e-05
-  read_cnt: 10000.0
+  read_cnt: 10000
   read_length_1: 150
   read_length_2: 150
