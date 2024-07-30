@@ -3,8 +3,8 @@ rule wgsim:
         os.path.join(config["output"]["output_path"],"results",
         config["samples"]["sample_name"],"amplicons")
     output:
-        os.path.join(config["output"]["output_path"],"results",
-        config["samples"]["sample_name"],"reads")
+        directory(os.path.join(config["output"]["output_path"],"results",
+        config["samples"]["sample_name"],"reads"))
     log:
         os.path.join(config["output"]["output_path"],"results",
         config["samples"]["sample_name"],"simulation.log")
