@@ -6,11 +6,31 @@ import argparse
 import yaml
 import pandas as pd
 
+
+def get_arguments():
+    """Parses command line arguments."""
+    parser = argparse.ArgumentParser(description="Amplicon sequencing simulator with user-defined proportions")
+    parser.add_argument("--samplenames", "-s", help="name of samples in order, separated by a comma")
+    parser.add_argument("--samplepaths", "-sp", help="path of samples in order, separated by a comma")
+    parser.add_argument("--proportions", "-pr", help="sample proportions separated by a comma, 0.0-1.0")
+    parser.add_argument("--primers", "-p", help="Path to primer bed file")
+    parser.add_argument("--readscnt", "-n", help="Total number of reads to be generated")
+    parser.add_argument("--readlength", "-l", help="Total number of reads to be generated", default=150)
+    parser.add_argument("--mutationrate", "-r", help="Mutation rate",default=0.00001)
+    parser.add_argument("--outerdistance", "-d", help="outer distance between reads", default=100)
+    parser.add_argument("--indelfraction", "-R", help="Fraction of indels", default=0.00001)
+    parser.add_argument("--indelextended", "-X", help="probability an indel is extended", default=0)
+    parser.add_argument("--baseerrorrate", "-e", help="base error rate", default= 0)
+    parser.add_argument("--output", "-o", help="Path to output file")
+    return parser.parse_args()
+
+
 def run_amplicon_simulator():
     command = [ "snakemake",
         "--configfile", "config.yaml", "--cores", "5", "--use-conda"
     ]
     subprocess.run(command, check=True)
+    
     
 def create_config_dict(sample_name,sample_path,primer_file,output_file,read_cnt,read_length,r,d,R,X,e):
     """
@@ -44,6 +64,7 @@ def create_config_dict(sample_name,sample_path,primer_file,output_file,read_cnt,
     }
     return config
 
+
 def write_yaml(config):
     """
     Writes config dictionary to a yaml formatted file.
@@ -67,22 +88,9 @@ def merge_fastq_files(fastq_file, output_file):
     command = f'cat "{fastq_file}" >> "{output_file}"'
     subprocess.call(command, shell=True)
 
+
 def main():
-    parser = argparse.ArgumentParser(description="Amplicon sequencing simulator with user-defined proportions")
-    parser.add_argument("--samplenames", "-s", help="name of samples in order, separated by a comma")
-    parser.add_argument("--samplepaths", "-sp", help="path of samples in order, separated by a comma")
-    parser.add_argument("--proportions", "-pr", help="sample proportions separated by a comma, 0.0-1.0")
-    parser.add_argument("--primers", "-p", help="Path to primer bed file")
-    parser.add_argument("--readscnt", "-n", help="Total number of reads to be generated")
-    parser.add_argument("--readlength", "-l", help="Total number of reads to be generated", default=150)
-    parser.add_argument("--mutationrate", "-r", help="Mutation rate",default=0.00001)
-    parser.add_argument("--outerdistance", "-d", help="outer distance between reads", default=100)
-    parser.add_argument("--indelfraction", "-R", help="Fraction of indels", default=0.00001)
-    parser.add_argument("--indelextended", "-X", help="probability an indel is extended", default=0)
-    parser.add_argument("--baseerrorrate", "-e", help="base error rate", default= 0)
-    parser.add_argument("--output", "-o", help="Path to output file")
-    
-    args = parser.parse_args()
+    args = get_arguments()
     # create a list of sample names, paths and proportions
     sample_names = str(args.samplenames).split(",")
     sample_paths = str(args.samplepaths).split(",")
