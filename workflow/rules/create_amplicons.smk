@@ -3,11 +3,21 @@ rule create_amplicon:
         genome=config["samples"]["sample_path"],
         primer=config["primers"]["primer_file"],
     output:
-        directory(os.path.join(config["output"]["output_path"],"results",
-        config["samples"]["sample_name"],"amplicons"))
+        directory(
+            os.path.join(
+                config["output"]["output_path"],
+                "results",
+                config["samples"]["sample_name"],
+                "amplicons",
+            )
+        ),
     log:
-        os.path.join(config["output"]["output_path"],"results",
-        config["samples"]["sample_name"],"amplicons/create_amplicon.log")
+        os.path.join(
+            config["output"]["output_path"],
+            "results",
+            config["samples"]["sample_name"],
+            "amplicons/create_amplicon.log",
+        ),
     conda:
         "envs/freyja.yaml"
     shell:
