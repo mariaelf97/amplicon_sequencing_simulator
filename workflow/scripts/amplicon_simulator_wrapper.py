@@ -4,6 +4,7 @@ import os
 import sys
 import argparse
 import yaml
+import pandas as pd
 
 def run_amplicon_simulator():
     command = [ "snakemake",
@@ -93,10 +94,17 @@ def main():
     # error if proportions do not add up to 1.0
     if sum(proportions) != 1.0:
         raise Exception("Sum of all proportions should equal to 1.0!")
+    col_names = ["ref","start", "end", "left_right", "primer_pool","strand", "primer_seq"]
+    # read the primer bed file
+    primer_bed = pd.read_csv(args.primers, sep= "\t", names=col_names)
+    # split the amplicon name into number and left/right
+    primer_bed["amplicon_number"] = primer_bed["left_right"].str.split('_').str[1]
+    amplicon_cnt = int(primer_bed['amplicon_number'].nunique())
     # create read counts based on user-defined proportions
     read_cnts = [i * int(args.readscnt) for i in proportions]
+    read_cnts_per_amp = [int(i /amplicon_cnt) for i in read_cnts]
     # loop over each isolate and create reads
-    for name,path,count in zip(sample_names,sample_paths, read_cnts):
+    for name,path,count in zip(sample_names,sample_paths, read_cnts_per_amp):
         config_file = create_config_dict(name,path,args.primers,args.output,count,args.readlength,
                                      args.mutationrate,args.outerdistance,
                                      args.indelfraction,args.indelextended,
@@ -106,7 +114,7 @@ def main():
         # simulate reads based on config file
         run_amplicon_simulator()
         # create paths to merge all reads after simualtion
-        read_path = os.path.join(os.path.abspath(args.output),"results",name,"reads/reads_1.fastq")
+        read_path = os.path.join(os.path.abspath(args.output),"results",name,"reads/merged_reads.fq")
         output_path = os.path.join(os.path.abspath(args.output),"results/merged_reads.fastq")
         # merge fastq files 
         merge_fastq_files(read_path,output_path)
