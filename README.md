@@ -24,3 +24,5 @@ If you use this workflow in a paper, don't forget to give credits to the authors
 * To learn more about how to adjust other parameters use `python workflow/scripts/amplicon_simulator_wrapper.py --help`
 * The final outputs will be located at `provided_output_path/results`. Simulated reads from all samples are located in `provided_output_path/results/merged_reads.fastq`
 * Once you run the pipeline, it will create a config.yaml file in your current working directory that contains information about all the parameters used in the simulation.
+* In order to find more about amplicon dropouts, please refer to `provided_output_path/results/sample_name/amplicon_stats.csv` file.
+If there is  no right or left primer match, the start or end and length of the amplicon will equal to zero.
